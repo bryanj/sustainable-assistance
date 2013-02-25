@@ -1,0 +1,34 @@
+import java.io.*;
+
+public class Matching
+{
+	public static void main(String args[])
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		while (true)
+		{
+			try
+			{
+				String input = br.readLine();
+				if (input.compareTo("QUIT") == 0)
+					break;
+
+				String[] files = input.split(" ");
+				DoMatch(files[0], files[1]);
+			}
+			catch (IOException e)
+			{
+				System.out.println("입력이 잘못되었습니다. 오류 : " + e.toString());
+			}
+		}
+	}
+
+	private static void DoMatch(String dataFile, String patternFile)
+	{
+		// TODO : 아래 문장을 삭제하고 구현해라.
+		// dataFile은 데이터 파일이며, patternFile은 패턴 파일이다.
+		// 출력은 화면에 함에 유의하고 출력문자 뒤에 필요없는 공백이 들어가지 않도록 유의
+		System.out.println("<< DoMatch 함수에서 " + dataFile + " 파일과 " + patternFile + " 파일을 이용해 Matching할 예정입니다 >>");
+	}
+}
