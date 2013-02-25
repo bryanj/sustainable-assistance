@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>과제 주의사항</h1>
+</div>
+<p>이 페이지에 있는 내용을 숙지하십시오. 그렇지 않은 경우 불이익을 받을 수 있습니다.</p>
+<ul>
+  <li>다른 사람의 소스 코드를 베끼는 것은 물론이고 <strong>봐도 안 됩니다. 참조하기 위해서 잠시 보는 것도 안 됩니다.</strong> 논의할 것이 있으면 말로 하고 코드는 서로 보여주지 않도록 하세요. 여기서 “다른 사람”은 이번 학기 수강생뿐만 아니라, 이전 학기 수강생을 모두 포함합니다.</li>
+  <li>위에 어긋나지 않는 범위에서 public domain에 있는 코드를 가져오는 것은 가능합니다. Public domain에서 가져온 클래스라면 클래스 시작 부분에 반드시 아래처럼 주석을 달아야 합니다.
+    <div class="example">
+      <pre>
+public class List {
+    // copy from http://www... &lt;-- "// copy from..."이라는 말이 반드시 있어야 함 
+    private int itemNum;
+    ...
+}</pre>
+    </div>
+  </li>
+  <li>특정 메쏘드만 가져왔다면 해당 메쏘드의 시작부에 위와 같은 방식으로 주석을 달아야 합니다.
+    <div class="example">
+      <pre>
+public class Sample {
+    private int itemNum;
+    ...
+    public method sampleMethod(....) {
+        // copy from ... &lt;-- "// copy from"이란 말이 반드시 있어야 함.
+        ...
+    }
+}</pre>
+    </div>
+  </li>
+  <li>만일 public domain에서 가져와서 본인이 일부 수정해서 사용한 클래스라면 클래스 시작부에 반드시 아래와 같은 주석을 달아야 합니다. ※ 메쏘드의 경우도 마찬가지입니다.
+    <div class="example">
+      <pre>
+public class List {
+    // modification from java.lang... &lt;-- "// modification from"이란 말이 반드시 있어야 함.
+    private int itemNum;
+    ...
+}</pre>
+    </div>
+  </li>
+  <li>여기서 public domain이라 함은 저자가 저작권을 주장하지 않기 때문에, 다른 이들이 자유롭게 변경·수정하여 사용할 수 있는 것을 말합니다.</li>
+</ul>
+<div class="alert alert-error">
+  부정행위가 적발됐을 경우 원본과 복사본 구분 없이 모두 그 과제는 0점으로 처리하고, 최종 학점에서 한 등급이 추가로 내려갑니다.<br>
+  (예: B+ -&gt; B0)
+</div>

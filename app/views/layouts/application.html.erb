@@ -19,7 +19,7 @@
           <a class="brand" href="/">Assignment Submission Page</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li><a href="#">Assignments</a></li>
+              <li><a href="/assignments/1">Assignments</a></li>
               <li><a href="#">Submit</a></li>
               <li><a href="#">Status</a></li>
             </ul>
@@ -30,7 +30,7 @@
 
     <div id="content" class="container">
 
-<%= yield %>
+<%= content_for?(:content) ? yield(:content) : yield %>
 
     </div>
     <div id="push"></div>
