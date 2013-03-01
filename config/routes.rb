@@ -58,4 +58,6 @@ SustainableAssistance::Application.routes.draw do
 
   match 'assignments/cheating' => 'assignments#cheating'
   match 'assignments/:id' => 'assignments#show'
+  match 'user/login' => 'user#login'
+  match 'user/logout' => 'user#logout'
 end
