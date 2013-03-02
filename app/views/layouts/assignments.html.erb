@@ -3,11 +3,11 @@
   <div class="span3">
     <div class="well sidebar-nav">
       <ul class="nav nav-list">
-        <li class="nav-header">LIST</li>
+        <li class="nav-header">과제 목록</li>
 <% @assignments.each do |assignment| %>
         <li<%= raw " class=\"active\"" if @assignment and assignment.id == @assignment.id %>><a href="/assignments/<%= assignment.id %>"><%= assignment.title %></a></li>
 <% end %>
-        <li class="nav-header">MISCELLANEOUS</li>
+        <li class="divider"></li>
         <li<%= raw " class=\"active\"" if params[:action] == "cheating" %>><a href="/assignments/cheating">부정행위에 관한 주의사항</a></li>
       </ul>
     </div>
