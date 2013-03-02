@@ -9,6 +9,11 @@ class SubmissionController < ApplicationController
   end
 
   def create
+    if params[:file].nil?
+      flash[:notice] = "첨부파일이 없습니다."
+      redirect_to :back
+      return
+    end
     submission = Submission.new(assignment_id: params[:assignment_id], user_id: session[:user_id])
     submission.file = params[:file]
     submission.save
