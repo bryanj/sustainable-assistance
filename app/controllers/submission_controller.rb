@@ -14,6 +14,12 @@ class SubmissionController < ApplicationController
       redirect_to :back
       return
     end
+    filename = Assignment.find(params[:assignment_id]).code + ".java"
+    if params[:file].original_filename != filename
+      flash[:notice] = "올바른 파일명이 아닙니다."
+      redirect_to :back
+      return
+    end
     submission = Submission.new(assignment_id: params[:assignment_id], user_id: session[:user_id])
     submission.file = params[:file]
     submission.save
