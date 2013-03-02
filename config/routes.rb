@@ -62,4 +62,7 @@ SustainableAssistance::Application.routes.draw do
   match 'user/logout' => 'user#logout'
   match 'user/edit_password' => 'user#edit_password'
   match 'user/update_password' => 'user#update_password'
+  match 'submission/new(/:assignment_id)' => 'submission#new'
+  match 'submission/create' => 'submission#create'
+  match 'submission/list(/:page)' => 'submission#list'
 end

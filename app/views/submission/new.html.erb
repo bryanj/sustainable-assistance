@@ -1,0 +1,20 @@
+<div class="page-header">
+<h1>과제 제출</h1>
+</div>
+<%=form_tag "/submission/create", multipart: true, class: "form-horizontal" do %>
+  <div class="control-group">
+    <label class="control-label" for="assignment_id">과제</label>
+    <div class="controls">
+      <%=select_tag "assignment_id", options_from_collection_for_select(@assignments, "id", "title", params[:assignment_id]) %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="file">파일</label>
+    <div class="controls">
+      <%=file_field_tag "file" %>
+    </div>
+  </div>
+  <div class="form-actions">
+    <%=submit_tag "제출", class: "btn btn-primary" %>
+  </div>
+<% end %>

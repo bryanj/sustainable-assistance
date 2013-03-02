@@ -1,0 +1,28 @@
+<div class="page-header">
+<h1>제출 목록</h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>과제명</th>
+      <th>제출시각</th>
+      <th>결과</th>
+    </tr>
+  </thead>
+  <tbody>
+<% @submissions.each do |submission| %>
+    <tr>
+      <td><%=submission.assignment.title %></td>
+      <td><%=submission.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td><%=submission.status_string %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+<div class="pagination pagination-centered">
+  <ul>
+<% 1.upto(@total_page) do |page| %>
+    <li<%=raw " class=\"active\"" if page == @current_page %>><a href="/submission/list/<%=page %>"><%=page %></a></li>
+<% end %>
+  </ul>
+</div>
