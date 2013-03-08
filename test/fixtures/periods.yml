@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  asssignment_id: 1
+  start_time: 2013-03-08 17:59:22
+  end_time: 2013-03-08 17:59:22
+
+two:
+  asssignment_id: 1
+  start_time: 2013-03-08 17:59:22
+  end_time: 2013-03-08 17:59:22

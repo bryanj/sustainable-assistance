@@ -11,20 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130302050159) do
+ActiveRecord::Schema.define(:version => 20130308085922) do
 
   create_table "assignments", :force => true do |t|
     t.string   "title"
-    t.datetime "duedate"
     t.text     "content"
+    t.string   "code"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "code"
+  end
+
+  create_table "periods", :force => true do |t|
+    t.integer  "assignment_id"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "submissions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "assignment_id"
+    t.integer  "period_id"
     t.string   "directory"
     t.integer  "status",        :default => 0
     t.text     "message"

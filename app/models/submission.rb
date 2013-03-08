@@ -1,7 +1,7 @@
 #encoding: utf-8
 require 'timeout'
 class Submission < ActiveRecord::Base
-  attr_accessible :assignment_id, :user_id
+  attr_accessible :assignment_id, :user_id, :period_id
   belongs_to :assignment
   belongs_to :user
 
