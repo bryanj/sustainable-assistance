@@ -9,6 +9,13 @@ class SubmissionController < ApplicationController
   end
 
   def create
+    period = Period.where(assignment_id: params[:assignment_id])
+              .where(["start_time < ? and end_time > ?", Time.now, Time.now]).first
+    if period.nil?
+      flash[:notice] = "과제의 제출 기간이 아닙니다."
+      redirect_to :back
+      return
+    end
     if params[:file].nil?
       flash[:notice] = "첨부파일이 없습니다."
       redirect_to :back
@@ -20,7 +27,7 @@ class SubmissionController < ApplicationController
       redirect_to :back
       return
     end
-    submission = Submission.new(assignment_id: params[:assignment_id], user_id: session[:user_id])
+    submission = Submission.new(assignment_id: params[:assignment_id], period_id: period.id, user_id: session[:user_id])
     submission.file = params[:file]
     submission.save
     flash[:notice] = "제출되었습니다!"
