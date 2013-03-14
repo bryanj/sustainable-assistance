@@ -14,7 +14,11 @@
     <tr>
       <td><%=submission.assignment.title %></td>
       <td><%=submission.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+<% if submission.failed? %>
+      <td><a href="/submission/<%=submission.id%>"><%=submission.status_string %></a></td>
+<% else %>
       <td><%=submission.status_string %></td>
+<% end %>
     </tr>
 <% end %>
   </tbody>

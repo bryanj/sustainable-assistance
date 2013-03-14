@@ -65,4 +65,5 @@ SustainableAssistance::Application.routes.draw do
   match 'submission/new(/:assignment_id)' => 'submission#new'
   match 'submission/create' => 'submission#create'
   match 'submission/list(/:page)' => 'submission#list'
+  match 'submission/:id' => 'submission#show'
 end
