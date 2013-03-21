@@ -15,3 +15,4 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 /upload
+/config/mail_account.yml

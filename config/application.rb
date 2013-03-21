@@ -58,5 +58,21 @@ module SustainableAssistance
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Mailer settings
+    MAIL_CONFIG = YAML.load_file(Rails.root.join('config', 'mail_account.yml'))
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      address: "smtp.gmail.com",
+      port: 587,
+      user_name: MAIL_CONFIG['username'],
+      password: MAIL_CONFIG['password'],
+      authentication: "plain",
+      enable_starttls_auto: true
+    }
+    ENV["notification_sender"] = MAIL_CONFIG['sender']
+    ENV["notification_receiver"] = MAIL_CONFIG['receiver']
   end
 end

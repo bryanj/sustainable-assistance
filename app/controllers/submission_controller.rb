@@ -31,6 +31,7 @@ class SubmissionController < ApplicationController
     submission.file = params[:file]
     if submission.save
       Stalker.enqueue("submission.run_test", id: submission.id)
+      Stalker.enqueue("submission.send_notification", id: submission.id)
       flash[:notice] = "제출되었습니다!"
       redirect_to "/submission/list"
     else

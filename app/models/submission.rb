@@ -68,4 +68,8 @@ class Submission < ActiveRecord::Base
       self.save
     end
   end
+
+  def send_notification
+    SubmissionMailer.submission_notification(self).deliver
+  end
 end
