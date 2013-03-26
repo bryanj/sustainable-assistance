@@ -37,6 +37,9 @@ class Submission < ActiveRecord::Base
     code = self.assignment.code
     path = Rails.root.join("upload", self.directory).to_s
     output = `cd #{path} && javac #{code}.java 2>&1`
+    if $?.exitstatus != 0 and output.include?("unmappable character for encoding UTF8")
+      output = `cd #{path} && javac #{code}.java -encoding EUC-KR 2>&1`
+    end
     if $?.exitstatus != 0
       # CE
       self.message = "Compile Error. Check the message below:\n\n" + output
