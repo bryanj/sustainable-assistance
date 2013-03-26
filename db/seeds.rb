@@ -15,16 +15,16 @@ assignment_list = [
   [6, "Subway", "2013-06-14", "Subway"]
 ]
 first_time = DateTime.parse("2013-03-04 00:00+0900")
-end_hour = 5.hour
-scoring_hour = 7.hour
+end_hour = 9.hour
+scoring_hour = 1.hour
 
 assignment_list.each do |id, title, duedate, code|
   content = File.open("public/assignment_content/#{id}.html", "r").read rescue nil
   duedate = DateTime.parse("#{duedate} 00:00+0900") + end_hour
   assignment = Assignment.create(title: title, content: content, code: code)
-  Period.create(assignment_id: assignment.id, start_time: first_time, end_time: duedate)
+  Period.create(assignment_id: assignment.id, start_time: first_time, end_time: duedate, result_time: duedate+scoring_hour)
   4.times do |i|
-    Period.create(assignment_id: assignment.id, start_time: duedate+scoring_hour, end_time: duedate+1.day)
+    Period.create(assignment_id: assignment.id, start_time: duedate+scoring_hour, end_time: duedate+1.day, result_time: duedate+1.day+scoring_hour)
     duedate += 1.day
   end
 end

@@ -5,6 +5,8 @@ class Submission < ActiveRecord::Base
   belongs_to :assignment
   belongs_to :user
 
+  after_create :create_result
+
   TIMEOUT = 5
 
   def file=(file)
@@ -74,5 +76,15 @@ class Submission < ActiveRecord::Base
 
   def send_notification
     SubmissionMailer.submission_notification(self).deliver
+  end
+
+private
+  def create_result
+    result = Result.where(user_id: self.user_id, period_id: self.period_id).first
+    if result.nil?
+      result = Result.new(user_id: self.user_id, assignment_id: self.assignment_id, period_id: self.period_id)
+    end
+    result.submission_id = self.id
+    result.save
   end
 end
