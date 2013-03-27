@@ -38,6 +38,13 @@ class Submission < ActiveRecord::Base
   def run_test
     code = self.assignment.code
     path = Rails.root.join("upload", self.directory).to_s
+    data = File.read(path + "/#{code}.java")
+    if data.include? "Runtime" or data.include? "File"
+      self.message = "This code will be tested after inspection of TA."
+      self.status = 1
+      self.save
+      return
+    end
     output = `cd #{path} && javac #{code}.java 2>&1`
     if $?.exitstatus != 0 and output.include?("unmappable character for encoding UTF8")
       output = `cd #{path} && javac #{code}.java -encoding EUC-KR 2>&1`
