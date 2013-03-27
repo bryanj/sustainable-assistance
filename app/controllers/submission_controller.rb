@@ -10,7 +10,7 @@ class SubmissionController < ApplicationController
 
   def create
     period = Period.where(assignment_id: params[:assignment_id])
-              .where(["start_time < ? and end_time > ?", Time.now, Time.now]).first
+              .where(["start_time < ? and end_time > ?", Time.now, Time.now - 10.minute]).first
     if period.nil?
       flash[:notice] = "과제의 제출 기간이 아닙니다."
       redirect_to :back
