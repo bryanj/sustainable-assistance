@@ -7,7 +7,7 @@ class SubmissionMailer < ActionMailer::Base
     filename = submission.assignment.code + ".java"
     attachments[filename] = File.read(Rails.root.join("upload", submission.directory, filename))
     @submission = submission
-    mail(to: "sky@izz.kr", subject: subject)
+    mail(subject: subject)
   end
 
   def submission_confirmation(submission)
