@@ -54,4 +54,20 @@ class SubmissionController < ApplicationController
       return
     end
   end
+
+  def score
+    page = (params[:page] ? params[:page].to_i : 1) - 1
+    @results = Result.where(user_id: session[:user_id]).includes(:assignment, :period).order("id desc").limit(PER_PAGE).offset(page * PER_PAGE)
+    @total_page = (Result.where(user_id: session[:user_id]).count - 1) / PER_PAGE + 1
+    @current_page = page + 1
+  end
+
+  def result
+    @result = Result.find(params[:id])
+    if @result.user_id != session[:user_id]
+      flash[:notice] = "올바르지 않은 접근입니다."
+      redirect_to :root
+      return
+    end
+  end
 end
