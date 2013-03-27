@@ -1,4 +1,5 @@
 <div class="page-header">
   <h1><%= @assignment.title %></h1>
+  <h4>제출기간: <%=@period.start_time.strftime("%Y-%m-%d %H:%M:%S")%> ~ <%=@period.end_time.strftime("%Y-%m-%d %H:%M:%S")%> (<%=@period.index%>차)</h4>
 </div>
 <%= raw @assignment.content %>
