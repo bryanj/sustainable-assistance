@@ -7,3 +7,7 @@ end
 job "submission.send_notification" do |args|
   Submission.find(args['id']).send_notification
 end
+
+job "submission.send_confirmation" do |args|
+  Submission.find(args['id']).send_confirmation
+end

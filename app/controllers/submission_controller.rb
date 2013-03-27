@@ -30,6 +30,7 @@ class SubmissionController < ApplicationController
     submission = Submission.new(assignment_id: params[:assignment_id], period_id: period.id, user_id: session[:user_id])
     submission.file = params[:file]
     if submission.save
+      Stalker.enqueue("submission.send_confirmation", id: submission.id)
       Stalker.enqueue("submission.send_notification", id: submission.id)
       Stalker.enqueue("submission.run_test", id: submission.id)
       flash[:notice] = "제출되었습니다!"

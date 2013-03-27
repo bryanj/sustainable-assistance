@@ -85,6 +85,10 @@ class Submission < ActiveRecord::Base
     SubmissionMailer.submission_notification(self).deliver
   end
 
+  def send_confirmation
+    SubmissionMailer.submission_confirmation(self).deliver
+  end
+
 private
   def create_result
     result = Result.where(user_id: self.user_id, period_id: self.period_id).first
