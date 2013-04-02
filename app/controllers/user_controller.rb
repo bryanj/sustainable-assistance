@@ -5,8 +5,10 @@ class UserController < ApplicationController
     if user and user.password? params[:password]
       session[:user_id] = user.id
       session[:username] = user.username
+      flash[:notice] = "로그인되었습니다."
+    else
+      flash[:notice] = "사용자명 또는 비밀번호가 일치하지 않습니다."
     end
-    flash[:notice] = "로그인되었습니다."
     redirect_to :back
   end
 
