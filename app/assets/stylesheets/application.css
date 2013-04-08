@@ -15,6 +15,9 @@
 html, body {
   height: 100%;
 }
+h1, h2, h3, h4, h5, h6 {
+  text-rendering: auto;
+}
 #wrap {
   min-height: 100%;
   height: auto !important;
