@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(:version => 20130326055034) do
     t.integer  "period_id"
     t.integer  "submission_id"
     t.integer  "score"
-    t.string   "detail"
+    t.text     "message"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

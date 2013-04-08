@@ -6,7 +6,7 @@ class CreateResults < ActiveRecord::Migration
       t.integer :period_id
       t.integer :submission_id
       t.integer :score
-      t.string :detail
+      t.text :message
 
       t.timestamps
     end

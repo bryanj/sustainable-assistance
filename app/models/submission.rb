@@ -96,6 +96,8 @@ private
       result = Result.new(user_id: self.user_id, assignment_id: self.assignment_id, period_id: self.period_id)
     end
     result.submission_id = self.id
+    result.score = nil
+    result.message = nil
     result.save
   end
 end
