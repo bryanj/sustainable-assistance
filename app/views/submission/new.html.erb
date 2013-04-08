@@ -12,9 +12,20 @@
     <label class="control-label" for="file">파일</label>
     <div class="controls">
       <%=file_field_tag "file" %>
+      <span id="filename" class="help-block"></span>
     </div>
   </div>
   <div class="form-actions">
     <%=submit_tag "제출", class: "btn btn-primary" %>
   </div>
 <% end %>
+<div>
+  주의: 같은 과제를 새로 제출하시는 경우 이전의 제출 및 채점 결과는 무효화되며, 마지막 제출만 최종 결과에 반영됩니다.
+</div>
+<script type="text/javascript">
+var filename = {<%=raw @assignments.map{|a| "\"#{a.id}\":\"#{a.code}.java\""}.join(",")%>};
+$("#assignment_id").change(function() {
+  var index = $("#assignment_id option:selected").attr("value");
+  $("#filename").text(filename[index]);
+}).change();
+</script>
