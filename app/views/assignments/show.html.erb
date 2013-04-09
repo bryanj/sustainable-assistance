@@ -1,5 +1,9 @@
 <div class="page-header">
   <h1><%= @assignment.title %></h1>
+<% if @period %>
   <h4>제출기간: <%=@period.start_time.strftime("%Y-%m-%d %H:%M:%S")%> ~ <%=@period.end_time.strftime("%Y-%m-%d %H:%M:%S")%> (<%=@period.index%>차)</h4>
+<% else %>
+  <h4>제출기간이 끝났습니다.
+<% end %>
 </div>
 <%= raw @assignment.content %>
