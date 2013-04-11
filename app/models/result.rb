@@ -80,4 +80,22 @@ class Result < ActiveRecord::Base
     `killall java`
     self.update_attributes(score: score, message: message)
   end
+
+  def self.summarize(assignment_id)
+    code = Assignment.find(assignment_id).code
+    results = Hash.new
+    Result.where(assignment_id: assignment_id).each do |r|
+      results[r.user_id] = r
+    end
+    Zip::ZipFile.open("summary#{assignment_id}.zip", Zip::ZipFile::CREATE) do |zipfile|
+      zipfile.get_output_stream("summary.csv") do |f|
+        results.sort.each do |k, r|
+          f.puts "#{r.user_id},#{r.user.name},#{r.score}"
+        end
+      end
+      results.each_value do |r|
+        zipfile.add("#{r.user_id}/#{code}.java", "upload/#{r.submission.directory}/#{code}.java")
+      end
+    end
+  end
 end
