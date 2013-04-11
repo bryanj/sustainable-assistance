@@ -1,4 +1,5 @@
 #encoding: utf-8
+require 'zip/zip'
 class Result < ActiveRecord::Base
   attr_accessible :user_id, :assignment_id, :period_id, :submission_id, :score, :message
   belongs_to :user
@@ -76,6 +77,7 @@ class Result < ActiveRecord::Base
       end
       index += 1
     end
+    `killall java`
     self.update_attributes(score: score, message: message)
   end
 end
