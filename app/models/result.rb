@@ -62,18 +62,18 @@ class Result < ActiveRecord::Base
             # WA
             message += "Case #{index}: Wrong Answer\n"
             message += "--- Input ---\n"
-            message += input + "\n"
+            message += truncate(input) + "\n"
             message += "--- Expected Output ---\n"
-            message += sample_output + "\n"
+            message += truncate(sample_output) + "\n"
             message += "--- Your Output ---\n"
-            message += output + "\n"
+            message += truncate(output) + "\n"
           end
         }
       rescue Timeout::Error
         # TLE
         message += "Case #{index}: Time Limit Exceeded\n"
         message += "--- Input ---\n"
-        message += input + "\n"
+        message += truncate(input) + "\n"
       end
       index += 1
     end
@@ -96,6 +96,17 @@ class Result < ActiveRecord::Base
       results.each_value do |r|
         zipfile.add("#{r.user_id}/#{code}.java", "upload/#{r.submission.directory}/#{code}.java")
       end
+    end
+  end
+
+private
+  LENGTH = 300
+
+  def truncate(str)
+    if str.length <= LENGTH
+      str
+    else
+      str[0..LENGTH-1] + "..(#{str.length - LENGTH} more characters)"
     end
   end
 end
