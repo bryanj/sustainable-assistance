@@ -61,7 +61,7 @@ class Submission < ActiveRecord::Base
     begin
       Timeout::timeout(TIMEOUT) {
         output = `cd #{path} && java #{code} < #{input_file} 2>&1`
-        if output.strip == sample_output.strip
+        if equivalent(output.strip, sample_output.strip)
           # AC
           self.message = "Accepted"
           self.status = 2
@@ -99,5 +99,41 @@ private
     result.score = nil
     result.message = nil
     result.save
+  end
+
+  def equivalent(out, sample_out)
+    return true if out == sample_out
+
+    lines = out.split("\n")
+    sample_lines = sample_out.split("\n")
+    return false if lines.size != sample_lines.size
+
+    0.upto(lines.size - 1) do |i|
+      line = lines[i]
+      sample_line = sample_lines[i]
+      if line != sample_line
+        tokens = line.split(" ")
+        sample_tokens = sample_line.split(" ")
+        return false if tokens.size != sample_tokens.size
+        0.upto(tokens.size - 1) do |j|
+          return false if !same_token(tokens[j], sample_tokens[j])
+        end
+      end
+    end
+
+    return true
+  end
+
+  def same_token(token, sample_token)
+    return true if token == sample_token
+    begin
+      value = Float(token)
+      sample_value = Float(sample_token)
+      error = (value / sample_value - 1).abs
+      return true if error < 1e-6
+      return false
+    rescue
+      return false
+    end
   end
 end
