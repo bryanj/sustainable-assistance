@@ -129,6 +129,7 @@ private
     begin
       value = Float(token)
       sample_value = Float(sample_token)
+      return true if value == sample_value
       error = (value / sample_value - 1).abs
       return true if error < 1e-6
       return false
