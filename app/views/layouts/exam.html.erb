@@ -1,0 +1,18 @@
+<% content_for :content do %>
+<div class="row">
+  <div class="span3">
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">시험 결과 확인</li>
+<% @exams.each do |exam| %>
+        <li<%= raw " class=\"active\"" if exam.id == @exam.id %>><a href="/exam/<%= exam.id %>"><%= exam.title %></a></li>
+<% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="span9">
+<%= yield %>
+  </div>
+</div>
+<% end %>
+<%= render :template => 'layouts/application' %>
