@@ -18,7 +18,7 @@
   <% c.each_with_index do |cc, j| %>
     <tr>
       <%=raw "<td rowspan=\"#{c.size+1}\">#{i+1}</td>" if j == 0%>
-      <td><%=cc%></td>
+      <td><%=raw cc%></td>
       <td><%=@score[i][j]%></td>
     </tr>
   <% end %>
