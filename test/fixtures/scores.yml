@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  exam_id: 
+  user_id: 1
+  score: MyText
+
+two:
+  exam_id: 
+  user_id: 1
+  score: MyText

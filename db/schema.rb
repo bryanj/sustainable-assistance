@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326055034) do
+ActiveRecord::Schema.define(:version => 20130504101823) do
 
   create_table "assignments", :force => true do |t|
     t.string   "title"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(:version => 20130326055034) do
     t.string   "code"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "exams", :force => true do |t|
+    t.string   "title"
+    t.boolean  "published",  :default => false
+    t.text     "criterion"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "periods", :force => true do |t|
@@ -39,6 +47,14 @@ ActiveRecord::Schema.define(:version => 20130326055034) do
     t.text     "message"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "exam_id"
+    t.integer  "user_id"
+    t.text     "score"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "submissions", :force => true do |t|
