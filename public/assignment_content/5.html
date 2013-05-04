@@ -1,12 +1,30 @@
+<div class="alert alert-block">
+  <h4>알림</h4>
+  과제의 세부 조건이 변경되었습니다. 변경된 과제 설명 및 뼈대 코드를 반드시 확인하시기 바랍니다. (2013-05-05)
+</div>
 <h2>1. 개요</h2>
 <p>Hash-table, AVL tree 등 여러 자료 구조를 혼합해서 사용하는 법을 익힙니다.</p>
 <h2>2. 뼈대 코드</h2>
 <p><a href="/assignment_skeleton/Matching.txt" class="btn btn-primary">뼈대 코드 받기</a></p>
 <p>이 코드를 기본으로 하여 내용을 추가하도록 합니다.<br>
-이 코드에는 제출을 위한 입출력과 파일이름만이 정의되어 있습니다.<br>
-뼈대 코드에서는 파일 두개의 이름을 키보드로부터 받는 부분까지만 되어 있습니다.<br>
-파일 입출력에 대한 부분부터 하면 됩니다.</p>
-<h2>3. 입력</h2>
+이 코드에는 제출을 위한 입출력과 파일이름만이 정의되어 있습니다.</p>
+<h2>3. 지원하는 명령어</h2>
+<p>명령어는 첫 글자로 구분되며, 명령어의 종류를 나타내는 기호와 명령어의 내용은 하나의 공백 문자로 구분됩니다. 자세한 구현 방식은 <strong>5. 세부사항</strong> 부분을 참고해 주세요.</p>
+<ol>
+  <li>데이터 입력: &lt; (FILENAME)<br>
+    패턴을 검색할 텍스트 파일을 입력합니다. 절대경로 및 상대경로를 모두 입력할 수 있습니다. 파일 이름 및 경로에는 공백이 포함되지 않는다고 가정해도 좋습니다. 새로운 텍스트 파일이 입력된 경우 이전에 입력된 데이터는 지워집니다.</li>
+  <li>저장된 데이터 출력: @ (INDEX NUMBER)<br>
+    입력한 번호에 해당하는 hash table의 slot에 담긴 문자열을 출력합니다. 전위 순회(preorder traversal) 방식으로 트리의 모든 노드를 출력합니다. slot이 비어 있을 경우 EMPTY를 출력합니다.</li>
+  <li>패턴 검색: ? (PATTERN)<br>
+    데이터 파일에서 등장하는 패턴의 위치를 모두 출력합니다. 패턴 문자열의 길이는 6 이상입니다.<br>
+    패턴에 등장할 수 있는 문자의 종류에는 제한이 없습니다. 즉, 공백 문자도 패턴에 포함될 수 있습니다.<br>
+    패턴의 위치는 (줄 번호, 시작 글자의 위치)의 형식으로 출력합니다. 첫 번째 줄의 첫 번째 글자는 (1, 1)입니다.<br>
+    패턴이 여러 번 등장하는 경우 각 좌표는 공백으로 구분합니다. 마지막 좌표 뒤에는 공백을 출력하지 않습니다.<br>
+    패턴이 검색되지 않는 경우 (0, 0)을 출력합니다.</li>
+  <li>종료: QUIT<br>
+    프로그램을 종료합니다.</li>
+</ol>
+<h2>4. 입력</h2>
 <p>입력 데이터는 한 줄에 문자열이 하나씩 있는 파일로 받습니다. 여러분은 파일을 읽으면서 총 줄 수를 세어야 합니다. 이 때 빈 줄은 무시해도 됩니다.</p>
 <p>이 예제는 5줄이므로 string 수는 5개입니다.</p>
 <div class="example">
@@ -14,60 +32,9 @@
 this is a boy. hello, boy.
 it is more important to avoid using a bad data structure.
 i am a boyboy. boys be ambitious!
-boyboyyoboyoboyoboyboyboy
+boyboyoboyboyboy
 more important to avoid it is more important to data</pre>
 </div>
-<h2>4. 실행 방법</h2>
-<p>main 함수를 포함한 public class의 이름은 Matching으로 합니다.<br>
-입출력하는 데이터들은 모두 파일이며, 키보드 입력을 통해 제어합니다.</p>
-<div class="example">
-  <pre>
-$ java Matching                          &lt;- 프로그램 실행
-DataFile PatternFile                     &lt;- 이렇게 입력. 데이터 파일과 패턴 파일 이름
-(1, 3)                                   &lt;- 이렇게 출력. 첫번째 패턴에 대해 : 첫번째 줄의 세번째 글자부터 패턴이 존재함
-(2, 7) (4, 6)                            &lt;- 이렇게 출력. 두번째 패턴에 대해 : 두번째 줄의 일곱전째 글자부터, 네번째 줄의 여섯번째 글자부터 패턴이 존재함 (총 2개)
-(0, 0)                                   &lt;- 이렇게 출력. 세번째 패턴에 대해 : 일치하는 패턴을 찾을 수 없음</pre>
-</div>
-<ul>
-  <li>화면 입력 - 한 줄에 아래 설명된 두 파일의 경로를 입력합니다. 두 파일은 1개의 공백문자로 구분됩니다. 따라서 각각의 파일 이름 및 경로에는 공백이 포함되지 않는다고 가정해도 좋습니다.<br>
-    절대경로와 상대경로를 모두 입력할 수 있습니다.<br>
-    <div class="example">
-      <pre>
-data1.txt pattern2.txt</pre>
-    </div>
-    <div class="example">
-      <pre>
-c:\datas\data2.txt ..\pattern1.txt</pre>
-    </div>
-    QUIT 를 입력하면 종료합니다.</li>
-  <li>DataFile - 위에서 설명한 data string들을 담은 파일입니다. (예: data1.txt c:\datas\data2.txt)
-    <div class="example">
-      <pre>
-this is a boy. hello, boy.
-it is more important to avoid using a bad data structure.
-i am a boyboy. boys be ambitious!
-boyboyyoboyoboyboyboyoboy
-more important to avoid it is more important to data</pre>
-    </div>
-  </li>
-  <li>PatternFile - 검색할 string이 한 줄에 하나씩 저장된 파일입니다. (예 : pattern2.txt ..\pattern1.txt)
-    <div class="example">
-      <pre>
-this is search string1                     &lt;- "this is search string1" 이라는 문자열을 찾겠다는 의미
-string2                                    &lt;- "string2" 이라는 문자열을 찾겠다는 의미
-string 3                                   &lt;- "string 3" 이라는 문자열을 찾겠다는 의미</pre>
-    </div>
-  </li>
-  <li>화면 출력  - PatternFile의 순서대로 search한 결과를 출력합니다. 해당 문자열을 찾을 수 없는 경우는 (0, 0)을 출력합니다. 예를 들면 다음과 같습니다. (이 예는 위 data와 상관이 없습니다)
-    <div class="example">
-      <pre>
-(1, 3)                  &lt;- 첫번째 줄의 세번째 글자부터 패턴이 존재함
-(2, 7) (4, 6)           &lt;- 두번째 줄의 일곱전째 글자부터, 네번째 줄의 여섯번째 글자부터 패턴이 존재함 (총 2개)
-(0, 0)                  &lt;- 일치하는 패턴을 찾을 수 없음
-</pre>
-    </div>
-  </li>
-</ul>
 <h2>5. 세부 사항<small>반드시 여기에 맞는 방식으로 구현해야 합니다.</small></h2>
 <p>전체 string의 개수가 n일 때, string의 집합을 S = { S<sub>1</sub> , S<sub>2</sub> , … , S<sub>n</sub>} 이라고 하자. S로 아래에 제시된 hash table과 AVL tree, linked list를 구성한다.<br>
   string S<sub>i</sub> (i=1,2, …,n)의 길이가 m일 때, S<sub>i</sub>에 대해서 길이 k인 substring S<sub>i</sub>[1..k], S<sub>i</sub>[2..k+1], …, S<sub>i</sub>[m-k+1..m] 이 존재한다. (S<sub>i</sub>[x..y]는 index가 x부터 y까지인 substring, 1 ≤ x ≤ y ≤ m)<br>
@@ -89,11 +56,29 @@ string 3                                   &lt;- "string 3" 이라는 문자열�
   즉, 길이가 6인 substring들에 대한 저장된 정보를 바탕으로 길이가 6 이상인 패턴 스트링을 처리하는 것이다.</li>
 </ol>
 <img src="/assets/hw5.jpg">
-<h2>6. 출력</h2>
-<p>사용자가 pattern string P를 입력으로 주면, S상에서 P가 발견되는 모든 위치 (몇 번째 입력string의 몇 번째 index부터 일치되었나)를 출력합니다. 예를 들어, P = "important to"일 때 2.의 입력 file에서 검색하면 출력은 (2, 12) (5, 6) (5, 36)이 됩니다.</p>
-<h2>7. 참고사항</h2>
+<h2>7. 예제 입출력</h2>
+<div class="example">
+  <pre>
+$ java Matching                             &lt;- 프로그램 실행
+&lt; data.txt                                  &lt;- 이렇게 입력
+? boyboy                                    &lt;- 이렇게 입력하면
+(3, 8) (4, 1) (4, 8) (4, 11)                &lt;- 이렇게 출력한다.
+? important to                              &lt;- 이렇게 입력하면
+(2, 12) (5, 6) (5, 36)                      &lt;- 이렇게 출력한다.
+? algorithm                                 &lt;- 이렇게 입력하면
+(0, 0)                                      &lt;- 이렇게 출력한다.
+@ 60                                        &lt;- 이렇게 입력하면
+portan boyboy oyboyb yboyob yboybo yoboyb   &lt;- 이렇게 출력한다.
+@ 73                                        &lt;- 이렇게 입력하면
+oyboyo ata st re imp oyoboy                 &lt;- 이렇게 출력한다.
+@ 0                                         &lt;- 이렇게 입력하면
+EMPTY                                       &lt;- 이렇게 출력한다.
+QUIT                                        &lt;- 이렇게 입력하면
+$                                           &lt;- 종료한다.
+  </pre>
+</div>
+<h2>8. 참고사항</h2>
 <ol>
-  <li><strong>[중요] Hash Table 와 AVL Tree를 제대로 구현하지 않고 허위 결과를 내면 부정행위로 0점 처리됩니다.</strong></li>
   <li>스펙이 상당히 복잡하므로 미리 충분히 읽고 이해하기 바랍니다. 스펙을 제대로 이해하지 않고 하는 질문은 받지 않겠습니다.</li>
   <li><strong>과목 게시판에 과제에 대한 질문 및 주의사항이 공지됩니다. 이를 수시로 확인하시기 바랍니다.</strong></li>
   <li><a href="/assignments/cheating">부정행위에 관한 주의사항</a>을 읽기 바랍니다.</li>
