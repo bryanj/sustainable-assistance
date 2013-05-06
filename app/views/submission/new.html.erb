@@ -15,6 +15,13 @@
       <span id="filename" class="help-block"></span>
     </div>
   </div>
+  <div id="report_row" class="control-group">
+    <label class="control-label" for="file">보고서</label>
+    <div class="controls">
+      <%=file_field_tag "report" %>
+      <span class="help-block">Report.pdf</span>
+    </div>
+  </div>
   <div class="form-actions">
     <%=submit_tag "제출", class: "btn btn-primary" %>
   </div>
@@ -24,8 +31,13 @@
 </div>
 <script type="text/javascript">
 var filename = {<%=raw @assignments.map{|a| "\"#{a.id}\":\"#{a.code}.java\""}.join(",")%>};
+var report = {<%=raw @assignments.map{|a| "\"#{a.id}\":#{a.report}"}.join(",")%>};
 $("#assignment_id").change(function() {
   var index = $("#assignment_id option:selected").attr("value");
   $("#filename").text(filename[index]);
+  if (report[index])
+    $("#report_row").show();
+  else
+    $("#report_row").hide();
 }).change();
 </script>

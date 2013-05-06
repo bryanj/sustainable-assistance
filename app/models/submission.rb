@@ -19,6 +19,12 @@ class Submission < ActiveRecord::Base
     end
   end
 
+  def report=(report)
+    File.open(Rails.root.join("upload", self.directory, "Report.pdf"), "wb") do |f|
+      f.write(report.read)
+    end
+  end
+
   def status_string
     ["제출 완료", "테스트 실패", "테스트 통과"][self.status]
   end

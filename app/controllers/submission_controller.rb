@@ -17,18 +17,29 @@ class SubmissionController < ApplicationController
       return
     end
     if params[:file].nil?
-      flash[:notice] = "첨부파일이 없습니다."
+      flash[:notice] = "코드 파일이 없습니다."
       redirect_to :back
       return
     end
     filename = Assignment.find(params[:assignment_id]).code + ".java"
     if params[:file].original_filename != filename
-      flash[:notice] = "올바른 파일명이 아닙니다."
+      flash[:notice] = "코드 파일의 이름이 올바르지 않습니다."
+      redirect_to :back
+      return
+    end
+    if period.assignment.report and params[:report].nil?
+      flash[:notice] = "보고서 파일이 없습니다."
+      redirect_to :back
+      return
+    end
+    if period.assignment.report and params[:report].original_filename != "Report.pdf"
+      flash[:notice] = "보고서 파일의 이름이 올바르지 않습니다."
       redirect_to :back
       return
     end
     submission = Submission.new(assignment_id: params[:assignment_id], period_id: period.id, user_id: session[:user_id])
     submission.file = params[:file]
+    submission.report = params[:report] if params[:report]
     if submission.save
       Stalker.enqueue("submission.send_confirmation", id: submission.id)
       Stalker.enqueue("submission.send_notification", id: submission.id)

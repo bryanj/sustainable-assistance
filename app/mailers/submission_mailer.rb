@@ -6,6 +6,9 @@ class SubmissionMailer < ActionMailer::Base
     subject = "[과제 제출 알림] #{submission.assignment.title} - #{submission.user.name}"
     filename = submission.assignment.code + ".java"
     attachments[filename] = File.read(Rails.root.join("upload", submission.directory, filename))
+    if submission.assignment.report
+      attachments["Report.pdf"] = File.read(Rails.root.join("upload", submission.directory, "Report.pdf"))
+    end
     @submission = submission
     mail(subject: subject)
   end
@@ -14,6 +17,9 @@ class SubmissionMailer < ActionMailer::Base
     subject = "[과제 제출 확인] #{submission.assignment.title}"
     filename = submission.assignment.code + ".java"
     attachments[filename] = File.read(Rails.root.join("upload", submission.directory, filename))
+    if submission.assignment.report
+      attachments["Report.pdf"] = File.read(Rails.root.join("upload", submission.directory, "Report.pdf"))
+    end
     @submission = submission
     mail(to: submission.user.mail_address, subject: subject)
   end
