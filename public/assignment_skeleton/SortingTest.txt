@@ -55,9 +55,6 @@ public class SortingTest
 					case 'I':	// Insertion Sort
 						newvalue = DoInsertionSort(newvalue);
 						break;
-					case 'S':	// Shell Sort
-						newvalue = DoShellSort(newvalue);
-						break;
 					case 'H':	// Heap Sort
 						newvalue = DoHeapSort(newvalue);
 						break;
@@ -112,13 +109,6 @@ public class SortingTest
 	private static int[] DoInsertionSort(int[] value)
 	{
 		// TODO : Insertion Sort 를 구현하라.
-		return (value);
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	private static int[] DoShellSort(int[] value)
-	{
-		// TODO : Shell Sort 를 구현하라.
 		return (value);
 	}
 
