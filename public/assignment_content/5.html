@@ -25,7 +25,7 @@
     프로그램을 종료합니다.</li>
 </ol>
 <h2>4. 입력</h2>
-<p>입력 데이터는 한 줄에 문자열이 하나씩 있는 파일로 받습니다. 여러분은 파일을 읽으면서 총 줄 수를 세어야 합니다. 이 때 빈 줄은 무시해도 됩니다.</p>
+<p>입력 데이터는 한 줄에 문자열이 하나씩 있는 파일로 받습니다. 여러분은 파일을 읽으면서 총 줄 수를 세어야 합니다. <del>이 때 빈 줄은 무시해도 됩니다.</del> 모든 줄은 6글자 이상으로 이루어져 있습니다.(2013-05-26 수정)</p>
 <p>이 예제는 5줄이므로 string 수는 5개입니다.</p>
 <div class="example">
   <pre>
@@ -46,6 +46,7 @@ more important to avoid it is more important to data</pre>
     <li>table의 크기는 collision을 유발하기 위해 비현실적이지만 100으로 한다.</li>
   </ol>
   <li>hash table의 각 slot은 AVL tree로 구현한다. 서로 다른 substring이지만 hashing값이 같으면 collision이 일어나므로 이들은 AVL tree로 구별한다.</li>
+  <li><strong>AVL tree에서 노드의 추가로 인해 높이의 불균형이 발생하였을 경우, 해당하는 노드 중 새로 추가된 노드에서 가장 가까운 조상을 기준으로 회전 연산을 적용한다.</strong>(2013-05-23 추가)</li>
 <li>AVL tree의 각 node는 linked list로 구현한다. 하나의 substring이 S상에서 여러 번 등장할 수 있다. 이러한 경우 AVL tree의 해당 node에서 linked list로 연결, 관리한다.</li>
 <li>string이 Si[j..j+k-1]일 때, linked list의 node는 (i, j) 값을 갖는다.</li>
 <li>예를 들어, S3 = "i am a boyboy. boys be ambitious!", S4= "boyboyoboyboyboy", k = 6이고, H("boyboy")에 의해 결정된 hash table 상의 index가 ("boyboy"의 ASCII값의 합) mod 100이면, substring S3[8..13], S4[1..6], S4[8..13], S4[11..16]에 의해 아래 그림과 같은 자료구조가 생성된다.</li>
