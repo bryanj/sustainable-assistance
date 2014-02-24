@@ -10,7 +10,7 @@
   <tfoot>
     <tr>
       <td colspan="2">총점</td>
-      <td><%=@score.flatten.inject(:+)%></td>
+      <td><%=sanitize(@score.flatten.compact.inject(:+))%></td>
     </tr>
   </tfoot>
   <tbody>
@@ -24,7 +24,7 @@
   <% end %>
     <tr>
       <td>합계</td>
-      <td><%=@score[i].inject(:+)%></td>
+      <td><%=sanitize(@score[i].compact.inject(:+))%></td>
     </tr>
 <% end %>
   </tbody>
