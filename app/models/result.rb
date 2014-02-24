@@ -50,10 +50,11 @@ class Result < ActiveRecord::Base
       next if f[0] == "."
       input_file = Rails.root.join("testset", self.period_id.to_s, "input", f).to_s
       input = File.read(input_file)
+      argument = File.read(Rails.root.join("testset", self.period_id.to_s, "argument", f)).strip rescue nil
       sample_output = File.read(Rails.root.join("testset", self.period_id.to_s, "output", f))
       begin
         Timeout::timeout(TIMEOUT) {
-          output = `cd #{path} && java #{code} < #{input_file} 2>&1`
+          output = `cd #{path} && java #{code} #{argument} < #{input_file} 2>&1`
           if equivalent(output.strip, sample_output.strip)
             # AC
             score += 1
@@ -62,6 +63,7 @@ class Result < ActiveRecord::Base
             # WA
             message += "Case #{index}: Wrong Answer\n"
             message += "--- Input ---\n"
+            message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
             message += hide_path(truncate(input)) + "\n"
             message += "--- Expected Output ---\n"
             message += truncate(sample_output) + "\n"
@@ -73,6 +75,7 @@ class Result < ActiveRecord::Base
         # TLE
         message += "Case #{index}: Time Limit Exceeded\n"
         message += "--- Input ---\n"
+        message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
         message += hide_path(truncate(input)) + "\n"
       end
       index += 1

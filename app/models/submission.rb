@@ -63,10 +63,11 @@ class Submission < ActiveRecord::Base
       return
     end
     input_file = Rails.root.join("public", "assignment_input", "#{self.assignment_id}.txt").to_s
+    argument = File.read(Rails.root.join("public", "assignment_argument", "#{self.assignment_id}.txt")).strip rescue nil
     sample_output = File.read(Rails.root.join("public", "assignment_output", "#{self.assignment_id}.txt"))
     begin
       Timeout::timeout(TIMEOUT) {
-        output = `cd #{path} && java #{code} < #{input_file} 2>&1`
+        output = `cd #{path} && java #{code} #{argument} < #{input_file} 2>&1`
         if equivalent(output.strip, sample_output.strip)
           # AC
           self.message = "Accepted"
