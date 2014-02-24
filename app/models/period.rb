@@ -3,6 +3,6 @@ class Period < ActiveRecord::Base
   belongs_to :assignment
 
   def index
-    self.id % 5
+    (self.id-1) % 5 + 1
   end
 end
