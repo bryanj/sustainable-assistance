@@ -62,7 +62,7 @@ class Result < ActiveRecord::Base
             # WA
             message += "Case #{index}: Wrong Answer\n"
             message += "--- Input ---\n"
-            message += truncate(input) + "\n"
+            message += hide_path(truncate(input)) + "\n"
             message += "--- Expected Output ---\n"
             message += truncate(sample_output) + "\n"
             message += "--- Your Output ---\n"
@@ -73,7 +73,7 @@ class Result < ActiveRecord::Base
         # TLE
         message += "Case #{index}: Time Limit Exceeded\n"
         message += "--- Input ---\n"
-        message += truncate(input) + "\n"
+        message += hide_path(truncate(input)) + "\n"
       end
       index += 1
     end
@@ -108,6 +108,10 @@ private
     else
       str[0..LENGTH-1] + "..(#{str.length - LENGTH} more characters)"
     end
+  end
+
+  def hide_path(str)
+    str.gsub(Rails.root.join("public").to_s+"/", "")
   end
 
   def equivalent(out, sample_out)
