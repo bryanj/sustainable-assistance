@@ -1,4 +1,4 @@
-< data.txt
+< /home/j/workspace/sustainable-assistance/public/assignment_input/data.txt
 ? boyboy
 ? important to
 ? algorithm
