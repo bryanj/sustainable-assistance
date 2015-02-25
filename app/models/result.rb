@@ -105,7 +105,9 @@ class Result < ActiveRecord::Base
     code = Assignment.find(assignment_id).code
     results = Hash.new
     Result.where(assignment_id: assignment_id).each do |r|
-      results[r.user_id] = r
+      if results[r.user_id].nil? or r.score > results[r.user_id].score
+        results[r.user_id] = r
+      end
     end
     Zip::ZipFile.open("summary#{assignment_id}.zip", Zip::ZipFile::CREATE) do |zipfile|
       zipfile.get_output_stream("summary.csv") do |f|
