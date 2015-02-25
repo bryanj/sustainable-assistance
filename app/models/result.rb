@@ -72,7 +72,7 @@ class Result < ActiveRecord::Base
             message += "--- Expected Output ---\n"
             message += truncate(sample_output) + "\n"
             message += "--- Your Output ---\n"
-            message += truncate(output) + "\n"
+            message += truncate(hide_path(output)) + "\n"
             raw_message += "Case #{index}: Wrong Answer\n"
             raw_message += "--- Input ---\n"
             raw_message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
