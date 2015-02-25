@@ -1,3 +1,8 @@
+<% if @result.is_public %>
+<p>
+  <a href="/result/<%=@result.period_id%>/<%=@result.code%>/result.zip" class="btn btn-primary">전체 채점 결과 받기</a>
+</p>
+<% end %>
 <pre>
 <% if @result.is_public %>
 <%=@result.message%>

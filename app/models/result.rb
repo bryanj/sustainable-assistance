@@ -28,6 +28,7 @@ class Result < ActiveRecord::Base
     if data.include? "Runtime" or data.include? "File"
       self.message = "This code will be tested after inspection of TA."
       self.score = 0
+      create_result_file
       self.save
       return
     end
@@ -39,12 +40,14 @@ class Result < ActiveRecord::Base
       # CE
       self.message = "Compile Error. Check the message below:\n\n" + output
       self.score = 0
+      create_result_file
       self.save
       return
     end
 
     score = 0
     message = ""
+    raw_message = ""
     index = 1
     Dir.entries(Rails.root.join("testset", self.period_id.to_s, "input")).sort_by{|f| f.to_i}.each do |f|
       next if f[0] == "."
@@ -59,6 +62,7 @@ class Result < ActiveRecord::Base
             # AC
             score += 1
             message += "Case #{index}: Accepted\n"
+            raw_message += "Case #{index}: Accepted\n"
           else
             # WA
             message += "Case #{index}: Wrong Answer\n"
@@ -69,6 +73,14 @@ class Result < ActiveRecord::Base
             message += truncate(sample_output) + "\n"
             message += "--- Your Output ---\n"
             message += truncate(output) + "\n"
+            raw_message += "Case #{index}: Wrong Answer\n"
+            raw_message += "--- Input ---\n"
+            raw_message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
+            raw_message += hide_path(input) + "\n"
+            raw_message += "--- Expected Output ---\n"
+            raw_message += sample_output + "\n"
+            raw_message += "--- Your Output ---\n"
+            raw_message += hide_path(output) + "\n"
           end
         }
       rescue Timeout::Error
@@ -77,11 +89,16 @@ class Result < ActiveRecord::Base
         message += "--- Input ---\n"
         message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
         message += hide_path(truncate(input)) + "\n"
+        raw_message += "Case #{index}: Time Limit Exceeded\n"
+        raw_message += "--- Input ---\n"
+        raw_message += "(Argument: " + hide_path(argument) + ")\n" if argument != nil
+        raw_message += hide_path(input) + "\n"
       end
       index += 1
     end
     `killall java`
     self.update_attributes(score: score, message: message)
+    create_result_file(raw_message)
   end
 
   def self.summarize(assignment_id)
@@ -152,5 +169,18 @@ private
     rescue
       return false
     end
+  end
+
+  def create_result_file(message = self.message)
+    self.code = (0..7).map{('A'..'Z').to_a[rand(26)]}.join if self.code.nil?
+    path = Rails.root.join("public", "result", self.period_id.to_s, self.code)
+    FileUtils.mkdir_p(path)
+    Zip::ZipFile.open(path.join("result.zip"), Zip::ZipFile::CREATE) do |zipfile|
+      zipfile.get_output_stream("result.txt") do |f|
+        f.puts message
+      end
+    end
+    File.chmod(0644, path.join("result.zip"))
+    self.save
   end
 end
