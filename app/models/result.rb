@@ -58,7 +58,7 @@ class Result < ActiveRecord::Base
       begin
         Timeout::timeout(TIMEOUT) {
           output = `cd #{path} && java #{code} #{argument} < #{input_file} 2>&1`
-          if equivalent(output.strip, sample_output.strip)
+          if equivalent(argument, output.strip, sample_output.strip)
             # AC
             score += 1
             message += "Case #{index}: Accepted\n"
@@ -134,8 +134,9 @@ private
     str.gsub(Rails.root.join("public").to_s+"/", "")
   end
 
-  def equivalent(out, sample_out)
+  def equivalent(file, out, sample_out)
     return true if out == sample_out
+    return equivalent_subway(file, out, sample_out) if file
 
     lines = out.split("\n")
     sample_lines = sample_out.split("\n")
@@ -155,6 +156,62 @@ private
     end
 
     return true
+  end
+
+  def equivalent_subway(file, out, sample_out)
+    data = read_subway_data(file)
+
+    lines = out.split("\n")
+    sample_lines = sample_out.split("\n")
+    return false if lines.size != sample_lines.size
+
+    0.upto(lines.size / 2 - 1) do |i|
+      path = lines[i * 2]
+      sample_path = sample_lines[i * 2]
+      length = lines[i * 2 + 1]
+      sample_length = sample_lines[i * 2 + 1]
+      return false if length != sample_length
+      if path != sample_path
+        path_weight = calculate_weight(data,path)
+        return false if path_weight != length.to_i
+      end
+    end
+
+    return true
+  end
+
+  def read_subway_data(file)
+    data = File.read(file)
+    vertex_list, edge_list = data.split("\n\n").map{|x| x.split("\n")}
+    name_map = {}
+    vertex_list.each do |v|
+      number, name = v.split(" ")
+      if name_map[name].nil?
+        name_map[name] = []
+      end
+      name_map[name].push number
+    end
+    edge_map = {}
+    edge_list.each do |v|
+      from, to, weight = v.split(" ")
+      edge_map[from+"|"+to] = weight.to_i
+    end
+    {name_map: name_map, edge_map: edge_map}
+  end
+
+  def calculate_weight(data, path)
+    weight = path.scan("[").count * 5
+    path.gsub! /\[|\]/, ""
+    vertex_list = path.split " "
+    (vertex_list.size-1).times do |i|
+      from = data[:name_map][vertex_list[i]]
+      to = data[:name_map][vertex_list[i+1]]
+      return -1 if from.nil? or to.nil?
+      segment_weight = from.map{|x| to.map{|y| data[:edge_map][[x, y].join("|")]}}.flatten.compact.first
+      return -1 if segment_weight.nil?
+      weight += segment_weight
+    end
+    weight
   end
 
   def same_token(token, sample_token)
