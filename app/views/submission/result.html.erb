@@ -2,6 +2,15 @@
 <p>
   <a href="/result/<%=@result.period_id%>/<%=@result.code%>/result.zip" class="btn btn-primary">전체 채점 결과 받기</a>
 </p>
+<% if @result.assignment_id == 6 %>
+<p>
+채점에 사용된 입력 파일입니다. <!--<a href="/subway.txt">subway.txt</a> <a href="/busan.txt">busan.txt</a> <a href="/oneway.txt">oneway.txt</a> <a href="/merge.txt">merge.txt</a> <a href="/overlap.txt">overlap.txt</a> <a href="/huge.txt">huge.txt</a>-->
+</p>
+<% elsif @result.assignment_id == 5 %>
+<p>
+채점에 사용된 입력 파일입니다. <!--<a href="/ban.txt">ban.txt</a> <a href="/choo.txt">choo.txt</a> <a href="/knuth.txt">knuth.txt</a> <a href="/pi.txt">pi.txt</a> <a href="/sherlock.txt">sherlock.txt</a> <a href="/z.txt">z.txt</a>-->
+</p>
+<% end %>
 <% end %>
 <pre>
 <% if @result.is_public %>
